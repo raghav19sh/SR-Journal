@@ -32,7 +32,9 @@ Never put a Supabase service-role key in the mobile app. The app uses only the p
 - Premium surface and entitlement-ready product architecture.
 - Private cloud backup.
 - Yearly recap.
-- Planned transcription, semantic/AI search, AI summaries, and storage tiers.
+- Server-side transcription with a Supabase Edge Function and OpenAI transcription model.
+- Server-side AI summaries through a Supabase Edge Function.
+- Planned semantic search and subscription storage tiers.
 - Store subscription wiring is intentionally release-stage because product IDs, Play/App Store billing, and server-side entitlement verification require the store accounts.
 
 ## Release gate
@@ -40,6 +42,7 @@ Never put a Supabase service-role key in the mobile app. The app uses only the p
 2. Real Android + iPhone SQLCipher and biometric testing.
 3. Supabase migration and RLS testing with two accounts.
 4. Upload/download/delete and offline testing.
-5. Billing product IDs and server-side entitlement verification.
+5. Configure billing product IDs and server-side entitlement verification.
+6. Set Supabase Edge Function secrets for the AI functions (OPENAI_API_KEY and Supabase service-role configuration).
 6. Privacy policy, account/data deletion, backup disclosure and store metadata.
 7. Security and dependency audits.
