@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "SR Journal",
+    "slug": "sr-journal",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "srjournal",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.raghavsharma.srjournal",
+      "infoPlist": {
+        "NSCameraUsageDescription": "SR Journal uses the camera to record your private video journal entries.",
+        "NSMicrophoneUsageDescription": "SR Journal uses the microphone to record audio with your private video journal entries."
+      }
+    },
+    "android": {
+      "package": "com.raghavsharma.srjournal",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow SR Journal to use your camera for private journal entries.",
+          "microphonePermission": "Allow SR Journal to use your microphone for private journal entries."
+        }
+      ],
+      "expo-router",
+      [
+        "expo-sqlite",
+        {
+          "useSQLCipher": false
+        }
+      ]
+    ],
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
