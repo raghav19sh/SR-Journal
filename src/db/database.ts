@@ -1,0 +1,9 @@
+import type { SQLiteDatabase } from 'expo-sqlite';
+import * as FileSystem from 'expo-file-system/legacy';
+export type JournalEntry={id:string;entryDate:string;videoUri:string;durationSeconds:number|null};
+export async function initDatabase(db:SQLiteDatabase){await db.execAsync(`PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS journal_entries(id TEXT PRIMARY KEY NOT NULL,entry_date TEXT NOT NULL,video_uri TEXT NOT NULL,duration_seconds REAL); CREATE INDEX IF NOT EXISTS idx_journal_entries_date ON journal_entries(entry_date);`);}
+export async function createEntry(db:SQLiteDatabase,e:JournalEntry){await db.runAsync('INSERT INTO journal_entries (id,entry_date,video_uri,duration_seconds) VALUES (?,?,?,?)',e.id,e.entryDate,e.videoUri,e.durationSeconds);}
+export async function getEntry(db:SQLiteDatabase,id:string){return db.getFirstAsync<JournalEntry>('SELECT id,entry_date as entryDate,video_uri as videoUri,duration_seconds as durationSeconds FROM journal_entries WHERE id=?',id);}
+export async function getEntriesForDate(db:SQLiteDatabase,dateKey:string){return db.getAllAsync<JournalEntry>('SELECT id,entry_date as entryDate,video_uri as videoUri,duration_seconds as durationSeconds FROM journal_entries WHERE substr(entry_date,1,10)=? ORDER BY entry_date DESC',dateKey);}
+export async function listEntryDates(db:SQLiteDatabase,month:Date){const y=month.getFullYear(),m=String(month.getMonth()+1).padStart(2,'0'),prefix=`${y}-${m}`;const rows=await db.getAllAsync<{date:string}>('SELECT DISTINCT substr(entry_date,1,10) as date FROM journal_entries WHERE entry_date LIKE ? ORDER BY date',`${prefix}%`);return rows.map(r=>r.date);}
+export async function deleteEntry(db:SQLiteDatabase,e:JournalEntry){await db.runAsync('DELETE FROM journal_entries WHERE id=?',e.id);try{await FileSystem.deleteAsync(e.videoUri,{idempotent:true});}catch{}}
