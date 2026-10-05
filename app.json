@@ -12,7 +12,8 @@
       "bundleIdentifier": "com.raghavsharma.srjournal",
       "infoPlist": {
         "NSCameraUsageDescription": "SR Journal uses the camera to record your private video journal entries.",
-        "NSMicrophoneUsageDescription": "SR Journal uses the microphone to record audio with your private video journal entries."
+        "NSMicrophoneUsageDescription": "SR Journal uses the microphone to record audio with your private video journal entries.",
+        "NSFaceIDUsageDescription": "Allow SR Journal to use Face ID to unlock your private journal."
       }
     },
     "android": {
@@ -34,7 +35,20 @@
       [
         "expo-sqlite",
         {
-          "useSQLCipher": false
+          "useSQLCipher": true
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow SR Journal to use Face ID to unlock your private journal."
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true,
+          "faceIDPermission": "Allow SR Journal to protect your private journal keys."
         }
       ]
     ],
